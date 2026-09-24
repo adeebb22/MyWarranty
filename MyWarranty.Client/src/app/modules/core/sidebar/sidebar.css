@@ -1,0 +1,133 @@
+:host { display: block; }
+.logo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 100px;
+}
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background: var(--sidebar);
+  transition: width 0.25s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar.collapsed { width: 76px; }
+
+.sidebar.collapsed .brand-info,
+.sidebar.collapsed .nav-item .label,
+.sidebar.collapsed .nav-badge,
+.sidebar.collapsed .user-info,
+.sidebar.collapsed .logout-link .label {
+  display: none;
+}
+
+.sidebar.collapsed .nav-item { justify-content: center; }
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: var(--sidebar-text);
+}
+
+.brand-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: var(--sidebar-text-dim);
+  white-space: nowrap;
+}
+
+.border-bottom, .border-top {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.nav-item {
+  height: 44px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+  color: var(--sidebar-text);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  margin-bottom: 2px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-item .icon {
+  width: 18px;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.nav-item:hover {
+  background: var(--sidebar-hover);
+  color: #fff;
+}
+
+.nav-item.active {
+  background: var(--sidebar-active);
+  color: #fff;
+  font-weight: 600;
+}
+
+.nav-item.active .icon { opacity: 1; }
+
+.nav-badge {
+  margin-left: auto;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--warning);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--sidebar-active);
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.u-name { font-size: 13px; font-weight: 600; color: #fff; }
+.u-email { font-size: 11px; color: var(--sidebar-text-dim); }
+
+.logout-link {
+  color: var(--sidebar-text-dim);
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.logout-link:hover { color: #fff; }
