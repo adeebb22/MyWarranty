@@ -1,0 +1,73 @@
+<main class="main">
+
+  <header class="page-header">
+    <div>
+      <h1>Good afternoon, Arjun 👋</h1>
+      <p>{{ products.length }} products tracked</p>
+    </div>
+
+    <a class="btn-gold" routerLink="/products">
+      <i class="bi bi-plus-lg"></i>
+      Add Product
+    </a>
+  </header>
+
+  <section class="stats-grid">
+    <app-stat-card 
+    *ngFor="let stat of stats" 
+    [stat]="stat">
+    </app-stat-card>
+  </section>
+
+  <div class="alert-banner" *ngIf="expiringSoonCount > 0">
+    <span><i class="bi bi-exclamation-triangle"></i> {{ expiringSoonCount }} warranty expiring within 30 days</span>
+    <a routerLink="/expiring-soon">View all →</a>
+  </div>
+
+  <section class="recent-section">
+    <div class="section-header">
+      <h2>Recent Products</h2>
+      <a routerLink="/products">View all →</a>
+    </div>
+
+    <div class="table-wrap">
+      <table class="mini-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Warranty Ends</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of recentProducts" [routerLink]="['/products']" [queryParams]="{ id: product.id }">
+            <td>
+              <div class="p-cell">
+                <i [class]="'bi ' + productsService.getCategoryIcon(product.category)"></i>
+                <div>
+                  <div class="p-name">{{ product.name }}</div>
+                  <div class="p-sub">{{ product.brand }}</div>
+                </div>
+              </div>
+            </td>
+            <td>{{ product.category }}</td>
+            <td>{{ product.warrantyEndDate | date: 'dd MMM yyyy' }}</td>
+            <td>
+              <span class="status-pill"
+                [class.active]="productsService.getWarrantyStatus(product) === 'Active'"
+                [class.expiring-soon]="productsService.getWarrantyStatus(product) === 'Expiring Soon'"
+                [class.expired]="productsService.getWarrantyStatus(product) === 'Expired'">
+                {{ productsService.getWarrantyStatus(product) }}
+              </span>
+            </td>
+          </tr>
+          <tr *ngIf="!recentProducts.length">
+            <td colspan="4" class="empty-text">No products yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>

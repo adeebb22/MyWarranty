@@ -1,0 +1,102 @@
+.product-form-overlay {
+  position: fixed; inset: 0; background: rgba(15, 23, 20, 0.5);
+  display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
+}
+
+.product-form-modal {
+  background: var(--card); border-radius: 16px; width: 100%; max-width: 640px;
+  max-height: 90vh; display: flex; flex-direction: column; overflow: hidden;
+}
+
+.product-form-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  padding: 20px 24px; border-bottom: 1px solid var(--border);
+}
+
+.product-form-header h3 { margin: 0; font-size: 17px; font-weight: 700; }
+.product-form-header p { margin: 4px 0 0; font-size: 12.5px; color: var(--text-muted); }
+
+.close-button { border: none; background: transparent; font-size: 16px; color: var(--text-faint); cursor: pointer; }
+
+.step-pills { display: flex; gap: 6px; padding: 14px 24px; border-bottom: 1px solid var(--border); overflow-x: auto; }
+
+.step-pill {
+  border: 1px solid var(--border); background: var(--bg); border-radius: 999px;
+  padding: 6px 14px; font-size: 12px; font-weight: 600; color: var(--text-muted);
+  white-space: nowrap; cursor: pointer; display: flex; align-items: center; gap: 5px;
+}
+
+.step-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.step-pill.done { color: var(--success); border-color: var(--success); }
+
+.product-form-body { padding: 20px 24px; overflow-y: auto; flex: 1; }
+
+.product-form-group { margin-bottom: 16px; }
+
+.product-form-label {
+  display: block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.3px;
+  color: var(--text-muted); margin-bottom: 6px;
+}
+
+.required { color: var(--danger); }
+
+.product-form-control, .product-select, textarea.product-form-control {
+  width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px;
+  font-size: 13.5px; font-family: inherit; outline: none; background: var(--card); color: var(--text);
+}
+
+.product-form-control:focus, .product-select:focus { border-color: var(--primary); }
+.product-form-control.is-invalid { border-color: var(--danger); }
+
+.validation-message { font-size: 11.5px; color: var(--danger); margin-top: 4px; }
+
+.form-row.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.section-divider { border: none; border-top: 1px solid var(--border); margin: 18px 0; }
+
+.upload-dropzone { border: 2px dashed var(--border); border-radius: 12px; padding: 26px 16px; text-align: center; color: var(--text-muted); }
+.upload-dropzone i { font-size: 20px; display: block; margin-bottom: 8px; }
+.upload-dropzone p { font-size: 13px; margin: 0 0 8px; }
+.upload-dropzone small { display: block; color: var(--text-faint); font-size: 11px; margin-top: 6px; }
+
+.btn-browse {
+  background: var(--success-soft); color: var(--primary); border: none; border-radius: 8px;
+  padding: 7px 14px; font-weight: 600; font-size: 12.5px; cursor: pointer; margin: 0 4px;
+}
+
+.btn-remove {
+  background: var(--danger-soft); color: var(--danger); border: none; border-radius: 8px;
+  padding: 7px 14px; font-weight: 600; font-size: 12.5px; cursor: pointer;
+}
+
+.cover-image-preview { max-width: 160px; border-radius: 10px; margin-bottom: 10px; }
+
+.hint-text { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--success); margin-top: 8px; }
+
+.review-heading { font-size: 15px; font-weight: 700; margin: 0 0 12px; }
+
+.review-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+.review-row span { color: var(--text-muted); }
+
+.product-form-footer { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; border-top: 1px solid var(--border); }
+.step-indicator { font-size: 12px; color: var(--text-faint); }
+.footer-buttons { display: flex; gap: 10px; }
+
+.btn-cancel {
+  background: var(--card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 10px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+
+.btn-add-vehicle {
+  background: var(--primary); color: #fff; border: none; border-radius: 8px;
+  padding: 10px 18px; font-size: 13px; font-weight: 600; cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+}
+
+@media (max-width: 640px) {
+  .product-form-overlay { padding: 0; align-items: flex-end; }
+  .product-form-modal { max-width: 100%; max-height: 95vh; border-radius: 16px 16px 0 0; }
+  .form-row.two-col { grid-template-columns: 1fr; }
+  .product-form-footer { flex-direction: column; gap: 10px; align-items: stretch; }
+  .footer-buttons { flex-direction: column; }
+}

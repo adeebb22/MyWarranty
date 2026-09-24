@@ -1,0 +1,98 @@
+.product-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.pc-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.pc-main { min-width: 180px; flex: 1; }
+.pc-name { font-weight: 700; font-size: 14px; }
+.pc-sub { font-size: 12px; color: var(--text-faint); margin-top: 2px; }
+
+.pc-col { display: flex; flex-direction: column; font-size: 13px; min-width: 140px; }
+
+.pc-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-faint);
+  margin-bottom: 3px;
+}
+
+.pc-days { font-size: 11.5px; color: var(--success); margin-top: 2px; }
+.pc-days.danger { color: var(--danger); }
+
+.status-pill {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-pill.active { background: var(--success-soft); color: var(--success); }
+.status-pill.expiring-soon { background: var(--warning-soft); color: var(--warning); }
+.status-pill.expired { background: var(--danger-soft); color: var(--danger); }
+
+.pc-menu-wrapper { position: relative; }
+
+.btn-more {
+  border: none;
+  background: transparent;
+  color: var(--text-faint);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.more-menu {
+  position: absolute;
+  right: 0;
+  top: 32px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  z-index: 10;
+  min-width: 140px;
+  overflow: hidden;
+}
+
+.more-menu button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.more-menu button:hover { background: var(--bg); }
+
+@media (max-width: 768px) {
+  .product-card { flex-wrap: wrap; }
+  .pc-col { min-width: 45%; }
+}

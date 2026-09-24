@@ -1,0 +1,38 @@
+<div class="product-card" (click)="onView()">
+
+    <div class="pc-icon">
+        <i [class]="'bi ' + productsService.getCategoryIcon(product.category)"></i>
+    </div>
+
+    <div class="pc-main">
+        <div class="pc-name">{{ product.name }}</div>
+        <div class="pc-sub">{{ product.brand }} · {{ product.modelNumber }}</div>
+    </div>
+
+    <div class="pc-col">
+        <span class="pc-label">Category</span>
+        {{ product.category }}
+    </div>
+
+    <div class="pc-col">
+        <span class="pc-label">Warranty Ends</span>
+        {{ product.warrantyEndDate }}
+        <span class="pc-days" *ngIf="status !== 'Expired'">{{ daysRemaining }} days left</span>
+        <span class="pc-days danger" *ngIf="status === 'Expired'">Expired {{ -daysRemaining }}d ago</span>
+    </div>
+
+    <span class="status-pill" [class.active]="status === 'Active'" [class.expiring-soon]="status === 'Expiring Soon'"
+        [class.expired]="status === 'Expired'">{{ status }}</span>
+
+    <div class="pc-menu-wrapper" (click)="$event.stopPropagation()">
+        <button class="btn-more" type="button" (click)="showMenu = !showMenu">
+            <i class="bi bi-three-dots-vertical"></i>
+        </button>
+
+        <div class="more-menu" *ngIf="showMenu">
+            <button type="button" (click)="onView()"><i class="bi bi-eye"></i> View</button>
+            <button type="button" (click)="onDelete()"><i class="bi bi-trash"></i> Delete</button>
+        </div>
+    </div>
+
+</div>

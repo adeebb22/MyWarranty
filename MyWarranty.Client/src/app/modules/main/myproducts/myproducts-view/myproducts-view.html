@@ -1,0 +1,68 @@
+<main class="main">
+
+  <ng-container *ngIf="!isDetailOpen && !showForm">
+
+    <header class="page-header">
+      <div>
+        <h1>My Products</h1>
+        <p>{{ countAll }} products registered</p>
+      </div>
+
+      <button class="btn-gold" type="button" (click)="onAddProduct()">
+        <i class="bi bi-plus-lg"></i>
+        Add Product
+      </button>
+    </header>
+
+    <div class="search-row">
+      <div class="search-box">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder="Search by name, brand, model, serial..."
+          [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)" />
+      </div>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-tab" [class.active]="activeFilter === 'All'" (click)="setFilter('All')">
+        All <span class="count">{{ countAll }}</span>
+      </button>
+      <button class="filter-tab" [class.active]="activeFilter === 'Active'" (click)="setFilter('Active')">
+        Active <span class="count">{{ countActive }}</span>
+      </button>
+      <button class="filter-tab" [class.active]="activeFilter === 'Expiring Soon'" (click)="setFilter('Expiring Soon')">
+        Expiring Soon <span class="count">{{ countExpiringSoon }}</span>
+      </button>
+      <button class="filter-tab" [class.active]="activeFilter === 'Expired'" (click)="setFilter('Expired')">
+        Expired <span class="count">{{ countExpired }}</span>
+      </button>
+    </div>
+
+    <section class="products-list">
+      <app-product-card
+       *ngFor="let product of filteredProducts"
+        [product]="product"
+        (viewDetails)="onViewDetails($event)"
+        (delete)="onDeleteProduct($event)">
+      </app-product-card>
+
+      <p class="empty-text" *ngIf="!filteredProducts.length">No products found.</p>
+    </section>
+
+  </ng-container>
+
+  <app-product-details
+    *ngIf="isDetailOpen && selectedProduct"
+    [product]="selectedProduct"
+    (back)="onBackToList()"
+    (editProduct)="onEditProduct($any($event))"
+    (deleteProduct)="onDeleteProduct($any($event))">
+  </app-product-details>
+
+  <app-product-form
+    *ngIf="showForm"
+    [product]="selectedProduct"
+    (save)="onSaveProduct($event)"
+    (cancel)="onCancelForm()">
+  </app-product-form>
+
+</main>
