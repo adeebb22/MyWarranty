@@ -1,0 +1,334 @@
+
+.main {
+  padding: 32px;
+  background: #f7f5ef;
+  min-height: 100vh;
+}
+
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  margin: 0 0 6px;
+
+  color: #1b2a23;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.page-header p {
+  margin: 0;
+
+  color: #6b756f;
+  font-size: 14px;
+}
+
+
+/* =========================
+   SETTINGS SECTION
+========================= */
+
+.settings-section {
+  background: #ffffff;
+
+  border: 1px solid #e7e2d3;
+  border-radius: 14px;
+
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+
+/* =========================
+   SECTION HEADER
+========================= */
+
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-header h2 {
+  margin: 0 0 5px;
+
+  color: #1b2a23;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.section-header p {
+  margin: 0;
+
+  color: #737c76;
+  font-size: 13px;
+}
+
+
+/* =========================
+   FORM GRID
+========================= */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+
+  color: #1b2a23;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.form-control {
+  width: 100%;
+  height: 44px;
+
+  padding: 0 13px;
+
+  border: 1px solid #ddd8ca;
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #1b2a23;
+  font-size: 14px;
+
+  outline: none;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #1c4a36;
+
+  box-shadow: 0 0 0 3px rgba(28, 74, 54, 0.08);
+}
+
+
+/* =========================
+   SETTING ROW
+========================= */
+
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px 0;
+}
+
+.setting-row h3 {
+  margin: 0 0 5px;
+
+  color: #1b2a23;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.setting-row p {
+  margin: 0;
+
+  color: #737c76;
+  font-size: 13px;
+}
+
+
+/* =========================
+   TOGGLE SWITCH
+========================= */
+
+.switch {
+  position: relative;
+
+  width: 48px;
+  height: 26px;
+
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+
+  cursor: pointer;
+
+  background: #d8d8d8;
+
+  border-radius: 30px;
+
+  transition: 0.25s;
+}
+
+.slider::before {
+  content: "";
+
+  position: absolute;
+
+  width: 20px;
+  height: 20px;
+
+  left: 3px;
+  top: 3px;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+
+  transition: 0.25s;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.switch input:checked + .slider {
+  background: #1c4a36;
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(22px);
+}
+
+
+/* =========================
+   ACCOUNT ACTIONS
+========================= */
+
+.account-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+/* =========================
+   SAVE BUTTON
+========================= */
+
+.btn-save {
+  height: 42px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #1c4a36;
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-save:hover {
+  background: #12372a;
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   LOGOUT BUTTON
+========================= */
+
+.btn-logout {
+  height: 42px;
+
+  padding: 0 18px;
+
+  border: 1px solid #e1dcd0;
+  border-radius: 8px;
+
+  background: #ffffff;
+  color: #b42318;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: #fff5f4;
+  border-color: #e5b8b4;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+
+  .main {
+    padding: 20px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .main {
+    padding: 16px;
+  }
+
+  .settings-section {
+    padding: 18px;
+  }
+
+  .setting-row {
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .account-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-save,
+  .btn-logout {
+    justify-content: center;
+    width: 100%;
+  }
+
+}

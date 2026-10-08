@@ -1,7 +1,7 @@
 export type WarrantyStatus = 'Active' | 'Expiring Soon' | 'Expired';
 
 export interface Product {
-  id: string;
+  productId: number;
   name: string;
   brand: string;
   category: string;
@@ -13,7 +13,6 @@ export interface Product {
   store: string;
 
   warrantyStartDate: string; // yyyy-MM-dd
-  warrantyDurationMonths: number;
   warrantyEndDate: string;   // yyyy-MM-dd
 
   notes: string;

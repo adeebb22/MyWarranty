@@ -17,8 +17,8 @@
     <div class="search-row">
       <div class="search-box">
         <i class="bi bi-search"></i>
-        <input type="text" placeholder="Search by name, brand, model, serial..."
-          [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)" />
+        <input type="text" placeholder="Search by name, brand, model, serial..." [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange($event)" />
       </div>
     </div>
 
@@ -38,11 +38,11 @@
     </div>
 
     <section class="products-list">
-      <app-product-card
-       *ngFor="let product of filteredProducts"
-        [product]="product"
-        (viewDetails)="onViewDetails($event)"
-        (delete)="onDeleteProduct($event)">
+      <app-product-card 
+      *ngFor="let product of filteredProducts" 
+      [product]="product"
+      (viewDetails)="onViewDetails($event)"
+      (delete)="onDeleteProduct($event)">
       </app-product-card>
 
       <p class="empty-text" *ngIf="!filteredProducts.length">No products found.</p>
@@ -51,18 +51,18 @@
   </ng-container>
 
   <app-product-details
-    *ngIf="isDetailOpen && selectedProduct"
-    [product]="selectedProduct"
-    (back)="onBackToList()"
-    (editProduct)="onEditProduct($any($event))"
-    (deleteProduct)="onDeleteProduct($any($event))">
+   *ngIf="isDetailOpen && selectedProduct" 
+   [product]="selectedProduct" 
+   (back)="onBackToList()"
+   (editProduct)="onEditProduct($any($event))" 
+   (deleteProduct)="onDeleteProduct($any($event))">
   </app-product-details>
 
-  <app-product-form
-    *ngIf="showForm"
-    [product]="selectedProduct"
-    (save)="onSaveProduct($event)"
-    (cancel)="onCancelForm()">
+  <app-product-form 
+  *ngIf="showForm" 
+  [product]="selectedProduct" 
+  (save)="onSaveProduct($event)"
+  (cancel)="onCancelForm()">
   </app-product-form>
 
 </main>

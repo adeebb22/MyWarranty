@@ -43,8 +43,7 @@ export class ProductForm implements OnChanges {
       purchaseDate: ['', Validators.required],
       purchasePrice: [null],
       store: [''],
-      warrantyStartDate: [''],
-      warrantyDurationMonths: [12],
+      warrantyStartDate: ['', Validators.required],
       warrantyEndDate: ['', Validators.required],
       notes: [''],
     });
@@ -108,6 +107,7 @@ export class ProductForm implements OnChanges {
   }
 
   saveProduct(): void {
+
     if (this.ProductForm.invalid) {
       this.ProductForm.markAllAsTouched();
       this.currentStep = 1;
@@ -117,7 +117,7 @@ export class ProductForm implements OnChanges {
     const value = this.ProductForm.value;
 
     const result: Product = {
-      id: this.product?.id ?? 'PRD' + Date.now(),
+     productId: this.product?.productId ?? 0,
       name: value.name,
       brand: value.brand,
       category: value.category,
@@ -127,13 +127,11 @@ export class ProductForm implements OnChanges {
       purchasePrice: value.purchasePrice ?? 0,
       store: value.store,
       warrantyStartDate: value.warrantyStartDate,
-      warrantyDurationMonths: value.warrantyDurationMonths,
       warrantyEndDate: value.warrantyEndDate,
       notes: value.notes,
       productImageUrl: this.productImagePreview ?? '',
       invoiceUrl: this.product?.invoiceUrl ?? '',
     };
-
     this.save.emit(result);
   }
 }

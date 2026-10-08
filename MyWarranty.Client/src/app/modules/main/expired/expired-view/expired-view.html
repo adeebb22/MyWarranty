@@ -1,0 +1,73 @@
+<main class="main">
+
+  <header class="page-header">
+
+    <div>
+      <h1>Expired Warranties</h1>
+
+      <p>
+        {{ expiredProducts.length }}
+        {{ expiredProducts.length === 1 ? 'product' : 'products' }}
+        with expired warranties
+      </p>
+    </div>
+
+  </header>
+
+
+  <section
+    class="empty-state"
+    *ngIf="expiredProducts.length === 0">
+
+    <i class="bi bi-shield-check"></i>
+
+    <h2>No Expired Warranties</h2>
+
+    <p>
+      Great! None of your product warranties have expired.
+    </p>
+
+  </section>
+
+
+  <section
+    class="product-grid"
+    *ngIf="expiredProducts.length > 0">
+
+    <div
+      class="product-card"
+      *ngFor="let product of expiredProducts">
+
+      <div class="product-icon">
+        <i class="bi bi-box-seam"></i>
+      </div>
+
+      <div class="product-info">
+
+        <h3>{{ product.name }}</h3>
+
+        <p>
+          {{ product.brand }}
+        </p>
+
+        <div class="warranty-date">
+
+          <span>Warranty expired</span>
+
+          <strong>
+            {{ product.warrantyEndDate }}
+          </strong>
+
+        </div>
+
+      </div>
+
+      <span class="status-badge">
+        Expired
+      </span>
+
+    </div>
+
+  </section>
+
+</main>

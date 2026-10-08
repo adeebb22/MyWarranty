@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardView } from './dashboard/dashboard-view/dashboard-view';
 import { MyProductsView } from './myproducts/myproducts-view/myproducts-view';
+import { ExpiredView } from './expired/expired-view/expired-view';
+import { SettingsView } from './settings/settings-view/settings-view';
 
 const routes: Routes = [
   {
@@ -16,6 +18,13 @@ const routes: Routes = [
   {
     path : 'myproducts',
     component : MyProductsView
+  },
+   {
+    path : 'expired',
+    component : ExpiredView
+  }, {
+    path : 'settings',
+    component : SettingsView
   }
 ];
 

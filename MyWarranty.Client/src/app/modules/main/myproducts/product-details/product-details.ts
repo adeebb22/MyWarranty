@@ -16,7 +16,7 @@ export class ProductDetails implements OnChanges {
 
   @Output() back = new EventEmitter<void>();
   @Output() editProduct = new EventEmitter<Product>();
-  @Output() deleteProduct = new EventEmitter<string>();
+  @Output() deleteProduct = new EventEmitter<number>();
 
   activeTab: ProductTab = 'overview';
   showMoreMenu = false;
@@ -57,7 +57,7 @@ export class ProductDetails implements OnChanges {
   onDelete(): void {
     this.showMoreMenu = false;
     if (confirm('Are you sure you want to delete this product?')) {
-      this.deleteProduct.emit(this.product.id);
+      this.deleteProduct.emit(this.product.productId);
     }
   }
 }

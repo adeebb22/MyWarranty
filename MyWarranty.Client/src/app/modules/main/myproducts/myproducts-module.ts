@@ -11,5 +11,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [MyProductsView, ProductCard, ProductForm, ProductDetails],
   imports: [CommonModule, MyproductsRoutingModule,ReactiveFormsModule,FormsModule],
+  exports: [ProductCard,ProductDetails,ProductForm]
 })
 export class MyproductsModule {}

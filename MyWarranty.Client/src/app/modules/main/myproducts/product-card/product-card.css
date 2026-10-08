@@ -54,43 +54,16 @@
 
 .pc-menu-wrapper { position: relative; }
 
-.btn-more {
-  border: none;
-  background: transparent;
-  color: var(--text-faint);
-  font-size: 16px;
-  cursor: pointer;
-  padding: 6px;
+.button-style{
+  border-radius: 18px;
+  transition-duration: 0.4s;
+  width: auto;
+  
 }
-
-.more-menu {
-  position: absolute;
-  right: 0;
-  top: 32px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  z-index: 10;
-  min-width: 140px;
-  overflow: hidden;
+.button-style:hover{
+ background-color: #2c3b2d; /* Green */
+  color: white;
 }
-
-.more-menu button {
-  width: 100%;
-  border: none;
-  background: transparent;
-  text-align: left;
-  padding: 10px 14px;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  color: var(--text);
-}
-
-.more-menu button:hover { background: var(--bg); }
 
 @media (max-width: 768px) {
   .product-card { flex-wrap: wrap; }

@@ -24,9 +24,7 @@ export class MyProductsView implements OnInit {
   showForm = false;
 
   constructor(
-    public productsService: ProductsService,
-    private route: ActivatedRoute,
-    private router: Router
+    public productsService: ProductsService
   ) {}
 
   ngOnInit(): void {
@@ -35,22 +33,13 @@ export class MyProductsView implements OnInit {
       this.applyFilters();
 
       if (this.selectedProduct) {
-        const refreshed = products.find(p => p.id === this.selectedProduct!.id);
+        const refreshed = products.find(p => p.productId === this.selectedProduct!.productId);
         this.selectedProduct = refreshed ?? null;
         if (!refreshed) this.isDetailOpen = false;
       }
     });
 
-    this.route.queryParams.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        const match = this.productsService.getProductById(id);
-        if (match) {
-          this.selectedProduct = match;
-          this.isDetailOpen = true;
-        }
-      }
-    });
+    
   }
 
   setFilter(filter: FilterKey): void {
@@ -87,6 +76,31 @@ export class MyProductsView implements OnInit {
   get countExpiringSoon(): number { return this.products.filter(p => this.productsService.getWarrantyStatus(p) === 'Expiring Soon').length; }
   get countExpired(): number { return this.products.filter(p => this.productsService.getWarrantyStatus(p) === 'Expired').length; }
 
+
+
+  loadProducts(): void {
+  this.productsService.getData().subscribe({
+    next: (products) => {
+      this.products = products;
+      this.applyFilters();
+
+      if (this.selectedProduct) {
+        const refreshed = products.find(
+          p => p.productId === this.selectedProduct!.productId
+        );
+
+        this.selectedProduct = refreshed ?? null;
+
+        if (!refreshed) {
+          this.isDetailOpen = false;
+        }
+      }
+    },
+    error: (error) => {
+      console.error('Failed to load products:', error);
+    }
+  });
+}
   onViewDetails(product: Product): void {
     this.selectedProduct = product;
     this.isDetailOpen = true;
@@ -95,7 +109,6 @@ export class MyProductsView implements OnInit {
   onBackToList(): void {
     this.isDetailOpen = false;
     this.selectedProduct = null;
-    this.router.navigate([], { queryParams: {} });
   }
 
   onAddProduct(): void {
@@ -108,25 +121,38 @@ export class MyProductsView implements OnInit {
     this.showForm = true;
   }
 
-  onSaveProduct(product: Product): void {
-    const exists = this.products.some(p => p.id === product.id);
-    if (exists) {
-      this.productsService.updateProduct(product);
-    } else {
-      this.productsService.addProduct(product);
+ onSaveProduct(product: Product): void {
+  this.productsService.saveProduct(product).subscribe({
+    next: (savedProduct) => {
+      console.log('Product saved:', savedProduct);
+
+      this.showForm = false;
+      this.onBackToList();
+
+      // Reload products from database
+      this.loadProducts();
+    },
+    error: (error) => {
+      console.error('Save failed:', error);
     }
-    this.showForm = false;
-    this.onBackToList();
-  }
+  });
+}
 
   onCancelForm(): void {
     this.showForm = false;
   }
 
-  onDeleteProduct(id: string): void {
+  onDeleteProduct(productId : number): void {
     if (confirm('Are you sure you want to delete this product?')) {
-      this.productsService.deleteProduct(id);
-      if (this.selectedProduct?.id === id) this.onBackToList();
+      this.productsService.deleteProduct(productId).subscribe({
+        next: () =>{
+          this.onBackToList();
+        
+        },
+        error: (error) => {
+          console.error('Delete Failed: ',error);
+        }
+      });
     }
   }
 }

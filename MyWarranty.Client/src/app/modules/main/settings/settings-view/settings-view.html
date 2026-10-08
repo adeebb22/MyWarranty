@@ -1,0 +1,140 @@
+<main class="main">
+
+  <header class="page-header">
+
+    <div>
+      <h1>Settings</h1>
+      <p>Manage your MyWarranty preferences</p>
+    </div>
+
+  </header>
+
+
+  <!-- PROFILE -->
+
+  <section class="settings-section">
+
+    <div class="section-header">
+
+      <div>
+        <h2>Profile</h2>
+        <p>Your basic account information</p>
+      </div>
+
+    </div>
+
+
+    <div class="form-grid">
+
+      <div class="form-group">
+
+        <label>Full Name</label>
+
+        <input
+          type="text"
+          [(ngModel)]="name"
+          class="form-control">
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>Email</label>
+
+        <input
+          type="email"
+          [(ngModel)]="email"
+          class="form-control">
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- APPEARANCE -->
+
+  <section class="settings-section">
+
+    <div class="section-header">
+
+      <div>
+        <h2>Appearance</h2>
+        <p>Customize how MyWarranty looks</p>
+      </div>
+
+    </div>
+
+
+    <div class="setting-row">
+
+      <div>
+
+        <h3>Dark Mode</h3>
+
+        <p>
+          Use dark mode throughout the application
+        </p>
+
+      </div>
+
+      <label class="switch">
+
+        <input
+          type="checkbox"
+          [(ngModel)]="darkMode">
+
+        <span class="slider"></span>
+
+      </label>
+
+    </div>
+
+  </section>
+
+
+  <!-- ACCOUNT -->
+
+  <section class="settings-section">
+
+    <div class="section-header">
+
+      <div>
+        <h2>Account</h2>
+        <p>Manage your account</p>
+      </div>
+
+    </div>
+
+
+    <div class="account-actions">
+
+      <button
+        type="button"
+        class="btn-save"
+        (click)="saveSettings()">
+
+        <i class="bi bi-check-lg"></i>
+
+        Save Changes
+
+      </button>
+
+
+      <button
+        type="button"
+        class="btn-logout">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        Logout
+
+      </button>
+
+    </div>
+
+  </section>
+
+</main>
