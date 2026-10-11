@@ -2,10 +2,31 @@
   {
     "label": "Menu",
     "items": [
-      { "label": "Dashboard", "icon": "bi bi-bar-chart-fill", "route": "/dashboard" },
-      { "label": "My Products", "icon": "bi bi-cart-fill", "route": "/myproducts" },
-      { "label": "Expired", "icon": "bi bi-x-circle", "route": "/expired" },
-      { "label": "Settings", "icon": "bi bi-gear", "route": "/settings" }
+      {
+        "label": "Dashboard",
+        "icon": "bi bi-bar-chart-fill",
+        "route": "/dashboard"
+      },
+      {
+        "label": "My Products",
+        "icon": "bi bi-cart-fill",
+        "route": "/myproducts"
+      },
+      {
+        "label": "Expiring Soon",
+        "icon": "bi bi-hourglass-split",
+        "route": "/expiring"
+      },
+      {
+        "label": "Expired",
+        "icon": "bi bi-x-circle",
+        "route": "/expired"
+      },
+      {
+        "label": "Settings",
+        "icon": "bi bi-gear",
+        "route": "/settings"
+      }
     ]
   }
 ]

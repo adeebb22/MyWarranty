@@ -1,14 +1,25 @@
+
 <div class="layout">
 
-  <app-sidebar 
-  [collapsed]="sidebarCollapsed">
+  <app-sidebar
+    [collapsed]="sidebarCollapsed"
+    [mobileOpen]="mobileOpen"
+    (closeMobileMenu)="closeMobileMenu()">
   </app-sidebar>
+
+  @if (mobileOpen) {
+    <button
+      class="sidebar-backdrop"
+      aria-label="Close navigation menu"
+      (click)="closeMobileMenu()">
+    </button>
+  }
 
   <div class="main-content">
 
     <app-navbar
-     (toggleSidebar)="toggleSidebar()">
-     </app-navbar>
+      (toggleSidebar)="toggleSidebar()">
+    </app-navbar>
 
     <main class="page-content">
       <router-outlet></router-outlet>

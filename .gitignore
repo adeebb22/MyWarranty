@@ -1,0 +1,43 @@
+# ==============================
+# Angular frontend
+# ==============================
+MyWarranty.Client/node_modules/
+MyWarranty.Client/dist/
+MyWarranty.Client/.angular/
+MyWarranty.Client/coverage/
+
+# ==============================
+# .NET backend
+# ==============================
+MyWarranty.Server/bin/
+MyWarranty.Server/obj/
+.vs/
+*.user
+*.suo
+
+# ==============================
+# Local environment secrets
+# ==============================
+.env
+.env.*
+!.env.example
+
+# ==============================
+# Local database files and backups
+# ==============================
+*.mdf
+*.ldf
+*.ndf
+*.bak
+*.bacpac
+
+# ==============================
+# Logs
+# ==============================
+*.log
+
+# ==============================
+# Operating system files
+# ==============================
+.DS_Store
+Thumbs.db

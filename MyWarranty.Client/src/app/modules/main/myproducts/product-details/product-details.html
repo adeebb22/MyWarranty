@@ -103,23 +103,93 @@
       </div>
     </div>
 
-    <div *ngIf="activeTab === 'documents'" class="overview-panel">
-      <div class="info-card" *ngIf="product.productImageUrl">
-        <h5>PRODUCT PHOTO</h5>
-        <img [src]="product.productImageUrl" class="doc-image" alt="Product">
-      </div>
+    
+<div *ngIf="activeTab === 'documents'" class="overview-panel">
 
-      <div class="info-card" *ngIf="product.invoiceUrl">
-        <h5>INVOICE</h5>
-        <a [href]="product.invoiceUrl" target="_blank" class="doc-link">
-          <i class="bi bi-file-earmark-text"></i> View Invoice
-        </a>
-      </div>
+  <!-- Product Photo -->
+  <div class="info-card" *ngIf="product.productImageUrl">
+    <h5>PRODUCT PHOTO</h5>
 
-      <p class="empty-text" *ngIf="!product.productImageUrl && !product.invoiceUrl">
-        No documents uploaded yet.
-      </p>
-    </div>
+    <img
+      [src]="product.productImageUrl"
+      class="doc-image clickable-document"
+      alt="Product photo"
+      (click)="openDocument(product.productImageUrl)"
+    />
+
+    <button
+      type="button"
+      class="doc-link"
+      (click)="openDocument(product.productImageUrl)">
+      <i class="bi bi-zoom-in"></i>
+      View Photo
+    </button>
+  </div>
+
+  <!-- Invoice -->
+  <div class="info-card" *ngIf="product.invoiceUrl">
+    <h5>PURCHASE INVOICE</h5>
+
+    <img
+      *ngIf="isImageDocument(product.invoiceUrl)"
+      [src]="product.invoiceUrl"
+      class="doc-image clickable-document"
+      alt="Purchase invoice"
+      (click)="openDocument(product.invoiceUrl)"
+    />
+
+    <button
+      type="button"
+      class="doc-link"
+      (click)="openDocument(product.invoiceUrl)">
+      <i
+        class="bi"
+        [ngClass]="isPdfDocument(product.invoiceUrl)
+          ? 'bi-file-earmark-pdf'
+          : 'bi-eye'">
+      </i>
+      {{ isPdfDocument(product.invoiceUrl)
+          ? 'View Invoice PDF'
+          : 'View Invoice Image' }}
+    </button>
+  </div>
+
+  <p
+    class="empty-text"
+    *ngIf="!product.productImageUrl && !product.invoiceUrl">
+    No documents uploaded yet.
+  </p>
+
+</div>
+
+<!-- Document Viewer -->
+<div
+  class="document-modal"
+  *ngIf="selectedDocument"
+  (click)="closeDocument()">
+
+  <button
+    type="button"
+    class="document-modal-close"
+    aria-label="Close document"
+    (click)="closeDocument()">
+    &times;
+  </button>
+
+  <iframe
+    *ngIf="selectedDocumentType === 'pdf'"
+    [src]="selectedDocument | safeUrl"
+    title="Purchase invoice PDF"
+    (click)="$event.stopPropagation()">
+  </iframe>
+
+  <img
+    *ngIf="selectedDocumentType === 'image'"
+    [src]="selectedDocument"
+    alt="Document preview"
+    (click)="$event.stopPropagation()">
+</div>
+
 
   </div>
 

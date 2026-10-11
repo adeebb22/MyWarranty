@@ -69,3 +69,67 @@
   .product-card { flex-wrap: wrap; }
   .pc-col { min-width: 45%; }
 }
+
+@media (max-width: 640px) {
+  .product-card {
+    padding: 14px;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .pc-main {
+    flex: 1 1 calc(100% - 60px);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .pc-col {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .pc-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .status-pill {
+    padding: 5px 9px;
+    font-size: 11px;
+  }
+}
+
+/* Improve button usability */
+.button-style {
+  min-height: 44px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* Keep card content within narrow screens */
+.product-card,
+.pc-main,
+.pc-col {
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Improve spacing on small phones */
+@media (max-width: 640px) {
+  .product-card {
+    gap: 12px;
+  }
+
+  .button-style {
+    min-height: 44px;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .button-style {
+    transition: none;
+  }
+}
+

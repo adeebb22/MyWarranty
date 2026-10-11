@@ -4,6 +4,7 @@ import { DashboardView } from './dashboard/dashboard-view/dashboard-view';
 import { MyProductsView } from './myproducts/myproducts-view/myproducts-view';
 import { ExpiredView } from './expired/expired-view/expired-view';
 import { SettingsView } from './settings/settings-view/settings-view';
+import { ExpiringView } from './expiring/expiring-view/expiring-view';
 
 const routes: Routes = [
   {
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     path : 'myproducts',
     component : MyProductsView
+  },
+  {
+    path : 'expiring',
+    component : ExpiringView
   },
    {
     path : 'expired',

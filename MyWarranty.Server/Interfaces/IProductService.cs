@@ -1,16 +1,19 @@
-﻿using MyWarranty.Server.Models;
+﻿using MyWarranty.Server.DTOs.Product;
 
 namespace MyWarranty.Server.Interfaces
 {
     public interface IProductService
     {
-        Task<List<MyProduct>> GetAllProductsAsync();
+        Task<List<ProductResponseDto>> GetAllProductsAsync();
 
-        Task<MyProduct?> GetProductByIdAsync(int id);
+        Task<ProductResponseDto?> GetProductByIdAsync(int id);
 
-        Task<MyProduct> CreateProductAsync(MyProduct product);
+        Task<ProductResponseDto> CreateProductAsync(
+            CreateProductDto dto);
 
-        Task<MyProduct?> UpdateProductAsync(MyProduct product);
+        Task<ProductResponseDto?> UpdateProductAsync(
+            int id,
+            UpdateProductDto dto);
 
         Task<bool> DeleteProductAsync(int id);
     }

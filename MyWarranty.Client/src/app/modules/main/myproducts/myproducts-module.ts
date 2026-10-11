@@ -7,10 +7,11 @@ import { ProductCard } from './product-card/product-card';
 import { ProductForm } from './product-form/product-form';
 import { ProductDetails } from './product-details/product-details';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../../shared/shared-module';
 
 @NgModule({
   declarations: [MyProductsView, ProductCard, ProductForm, ProductDetails],
-  imports: [CommonModule, MyproductsRoutingModule,ReactiveFormsModule,FormsModule],
+  imports: [CommonModule, MyproductsRoutingModule,ReactiveFormsModule,FormsModule,SharedModule],
   exports: [ProductCard,ProductDetails,ProductForm]
 })
 export class MyproductsModule {}

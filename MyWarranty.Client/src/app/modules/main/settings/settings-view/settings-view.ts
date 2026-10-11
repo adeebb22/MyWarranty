@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
+import { ThemeService } from '../../../../services/theme-service';
 
 @Component({
   selector: 'app-settings-view',
@@ -6,17 +8,26 @@ import { Component } from '@angular/core';
   templateUrl: './settings-view.html',
   styleUrl: './settings-view.css'
 })
-export class SettingsView {
+export class SettingsView implements OnInit {
 
-  name = 'Arjun';
-  email = 'arjun@example.com';
+  name = 'Adeeb';
+  email = 'adeeb@example.com';
 
   darkMode = false;
 
-  saveSettings(): void {
+  constructor(private themeService: ThemeService) {}
 
-    console.log('Settings saved');
-
+  ngOnInit(): void {
+    this.darkMode = this.themeService.getTheme() === 'dark';
   }
 
+  onThemeChange(): void {
+    const theme = this.darkMode ? 'dark' : 'light';
+
+    this.themeService.setTheme(theme);
+  }
+
+  saveSettings(): void {
+    console.log('Settings saved');
+  }
 }

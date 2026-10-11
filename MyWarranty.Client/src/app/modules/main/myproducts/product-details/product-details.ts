@@ -20,6 +20,8 @@ export class ProductDetails implements OnChanges {
 
   activeTab: ProductTab = 'overview';
   showMoreMenu = false;
+  selectedDocument: string | null = null;
+selectedDocumentType: 'image' | 'pdf' | null = null;
 
   tabs: { key: ProductTab; label: string }[] = [
     { key: 'overview', label: 'Overview' },
@@ -31,11 +33,37 @@ export class ProductDetails implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     const change = changes['product'];
-    if (change && !change.firstChange && change.previousValue?.id !== change.currentValue?.id) {
-      this.activeTab = 'overview';
-      this.showMoreMenu = false;
-    }
+    if (
+  change &&
+  !change.firstChange &&
+  change.previousValue?.productId !== change.currentValue?.productId
+) {
+  this.activeTab = 'overview';
+  this.showMoreMenu = false;
+  this.closeDocument();
+}
   }
+  openDocument(url: string): void {
+  this.selectedDocument = url;
+  this.selectedDocumentType = this.isPdfDocument(url)
+    ? 'pdf'
+    : 'image';
+}
+
+closeDocument(): void {
+  this.selectedDocument = null;
+  this.selectedDocumentType = null;
+}
+
+isPdfDocument(url: string): boolean {
+  return url.startsWith('data:application/pdf') ||
+         /\.pdf(?:[?#].*)?$/i.test(url);
+}
+
+isImageDocument(url: string): boolean {
+  return url.startsWith('data:image/') ||
+         /\.(jpg|jpeg|png|gif|webp)(?:[?#].*)?$/i.test(url);
+}
 
   setTab(tab: ProductTab): void {
     this.activeTab = tab;

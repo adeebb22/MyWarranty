@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Product } from '../../../../models/product.model';
 import { ProductsService } from '../../../../services/products-service';
 
@@ -24,23 +23,15 @@ export class MyProductsView implements OnInit {
   showForm = false;
 
   constructor(
-    public productsService: ProductsService
-  ) {}
+    private productsService: ProductsService,
+    private cdr: ChangeDetectorRef
+  ) { }
+
 
   ngOnInit(): void {
-    this.productsService.getData().subscribe(products => {
-      this.products = products;
-      this.applyFilters();
-
-      if (this.selectedProduct) {
-        const refreshed = products.find(p => p.productId === this.selectedProduct!.productId);
-        this.selectedProduct = refreshed ?? null;
-        if (!refreshed) this.isDetailOpen = false;
-      }
-    });
-
-    
+    this.loadProducts();
   }
+
 
   setFilter(filter: FilterKey): void {
     this.activeFilter = filter;
@@ -52,24 +43,30 @@ export class MyProductsView implements OnInit {
     this.applyFilters();
   }
 
-  private applyFilters(): void {
-    let list = this.products;
+  
+private applyFilters(): void {
+  let list = this.products;
 
-    if (this.activeFilter !== 'All') {
-      list = list.filter(p => this.productsService.getWarrantyStatus(p) === this.activeFilter);
-    }
-
-    const term = this.searchTerm.trim().toLowerCase();
-    if (term) {
-      list = list.filter(p =>
-        p.name.toLowerCase().includes(term) ||
-        p.brand.toLowerCase().includes(term) ||
-        p.modelNumber.toLowerCase().includes(term)
-      );
-    }
-
-    this.filteredProducts = list;
+  if (this.activeFilter !== 'All') {
+    list = list.filter(
+      p => this.productsService.getWarrantyStatus(p) === this.activeFilter
+    );
   }
+
+  const term = this.searchTerm.trim().toLowerCase();
+
+  if (term) {
+    list = list.filter(p =>
+      (p.name ?? '').toLowerCase().includes(term) ||
+      (p.brand ?? '').toLowerCase().includes(term) ||
+      (p.modelNumber ?? '').toLowerCase().includes(term) ||
+      (p.serialNumber ?? '').toLowerCase().includes(term)
+    );
+  }
+
+  this.filteredProducts = list;
+}
+
 
   get countAll(): number { return this.products.length; }
   get countActive(): number { return this.products.filter(p => this.productsService.getWarrantyStatus(p) === 'Active').length; }
@@ -79,28 +76,29 @@ export class MyProductsView implements OnInit {
 
 
   loadProducts(): void {
-  this.productsService.getData().subscribe({
-    next: (products) => {
-      this.products = products;
-      this.applyFilters();
+    this.productsService.getData().subscribe({
+      next: (products) => {
+        this.products = products;
+        this.applyFilters();
 
-      if (this.selectedProduct) {
-        const refreshed = products.find(
-          p => p.productId === this.selectedProduct!.productId
-        );
+        if (this.selectedProduct) {
+          const refreshed = products.find(
+            p => p.productId === this.selectedProduct!.productId
+          );
 
-        this.selectedProduct = refreshed ?? null;
+          this.selectedProduct = refreshed ?? null;
 
-        if (!refreshed) {
-          this.isDetailOpen = false;
+          if (!refreshed) {
+            this.isDetailOpen = false;
+          }
         }
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Failed to load products:', error);
       }
-    },
-    error: (error) => {
-      console.error('Failed to load products:', error);
-    }
-  });
-}
+    });
+  }
   onViewDetails(product: Product): void {
     this.selectedProduct = product;
     this.isDetailOpen = true;
@@ -121,36 +119,35 @@ export class MyProductsView implements OnInit {
     this.showForm = true;
   }
 
- onSaveProduct(product: Product): void {
-  this.productsService.saveProduct(product).subscribe({
-    next: (savedProduct) => {
-      console.log('Product saved:', savedProduct);
+  onSaveProduct(product: Product): void {
+  
 
-      this.showForm = false;
-      this.onBackToList();
-
-      // Reload products from database
-      this.loadProducts();
-    },
-    error: (error) => {
-      console.error('Save failed:', error);
-    }
-  });
-}
+    this.productsService.saveProduct(product).subscribe({
+      next: (result) => {
+       
+        this.showForm = false;
+        this.loadProducts();
+      },
+      error: (error) => {
+        console.error('Save API error:', error);
+      }
+    });
+  }
 
   onCancelForm(): void {
     this.showForm = false;
   }
 
-  onDeleteProduct(productId : number): void {
+  onDeleteProduct(productId: number): void {
     if (confirm('Are you sure you want to delete this product?')) {
       this.productsService.deleteProduct(productId).subscribe({
-        next: () =>{
+        next: () => {
           this.onBackToList();
-        
+          this.loadProducts();
+
         },
         error: (error) => {
-          console.error('Delete Failed: ',error);
+          console.error('Delete Failed: ', error);
         }
       });
     }

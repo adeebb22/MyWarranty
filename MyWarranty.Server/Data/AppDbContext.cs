@@ -11,5 +11,7 @@ namespace MyWarranty.Server.Data
         }
 
         public DbSet<MyProduct> Products { get; set; }
+
+       
     }
 }

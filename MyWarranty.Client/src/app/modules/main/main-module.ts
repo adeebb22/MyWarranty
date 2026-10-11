@@ -6,15 +6,16 @@ import { MyproductsModule } from './myproducts/myproducts-module';
 import { DashboardModule } from './dashboard/dashboard-module';
 import { ExpiredModule } from './expired/expired-module';
 import { FormsModule } from '@angular/forms';
-
+import { SafeUrlPipe } from '../../shared/pipes/safe-url.pipe';
 
 @NgModule({
-  imports: [CommonModule,
-     MainRoutingModule,
-      DashboardModule,
-       MyproductsModule,
-      FormsModule,
-      ExpiredModule
-    ]
+  imports: [
+    CommonModule,
+    MainRoutingModule,
+    DashboardModule,
+    MyproductsModule,
+    FormsModule,
+    ExpiredModule
+  ]
 })
 export class MainModule { }

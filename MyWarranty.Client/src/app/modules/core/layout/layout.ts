@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 
 @Component({
@@ -7,8 +8,18 @@ import { Component } from '@angular/core';
   styleUrl: './layout.css',
 })
 export class Layout {
-   sidebarCollapsed = false;
-    toggleSidebar():void{
-      this.sidebarCollapsed = !this.sidebarCollapsed;
-    }
+  sidebarCollapsed = false;
+  mobileOpen = false;
+
+  toggleSidebar(): void {
+  if (window.innerWidth <= 768) {
+    this.mobileOpen = !this.mobileOpen;
+  } else {
+    this.sidebarCollapsed = !this.sidebarCollapsed;
+  }
+}
+
+  closeMobileMenu(): void {
+    this.mobileOpen = false;
+  }
 }

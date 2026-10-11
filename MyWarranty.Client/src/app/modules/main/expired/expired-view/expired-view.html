@@ -1,10 +1,9 @@
+
 <main class="main">
 
   <header class="page-header">
-
     <div>
       <h1>Expired Warranties</h1>
-
       <p>
         {{ expiredProducts.length }}
         {{ expiredProducts.length === 1 ? 'product' : 'products' }}
@@ -12,62 +11,78 @@
       </p>
     </div>
 
+    <span class="expired-count">
+      {{ expiredProducts.length }} products
+    </span>
   </header>
-
-
-  <section
-    class="empty-state"
-    *ngIf="expiredProducts.length === 0">
-
-    <i class="bi bi-shield-check"></i>
-
-    <h2>No Expired Warranties</h2>
-
-    <p>
-      Great! None of your product warranties have expired.
-    </p>
-
-  </section>
-
 
   <section
     class="product-grid"
-    *ngIf="expiredProducts.length > 0">
+    *ngIf="expiredProducts.length > 0; else emptyState">
 
-    <div
+    <article
       class="product-card"
       *ngFor="let product of expiredProducts">
 
-      <div class="product-icon">
-        <i class="bi bi-box-seam"></i>
+      <div class="product-image-wrap">
+        <img
+          *ngIf="product.productImageUrl; else defaultImage"
+          class="product-image"
+          [src]="product.productImageUrl"
+          [alt]="product.name"
+          (error)="product.productImageUrl = ''">
+
+        <ng-template #defaultImage>
+          <div class="product-placeholder">
+            <i class="bi bi-box-seam"></i>
+          </div>
+        </ng-template>
       </div>
 
       <div class="product-info">
+        <div class="product-heading">
+          <div class="product-name">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.brand || product.category }}</p>
+          </div>
 
-        <h3>{{ product.name }}</h3>
-
-        <p>
-          {{ product.brand }}
-        </p>
-
-        <div class="warranty-date">
-
-          <span>Warranty expired</span>
-
-          <strong>
-            {{ product.warrantyEndDate }}
-          </strong>
-
+          <span class="status-badge">
+            Expired
+          </span>
         </div>
 
+        <div class="warranty-details">
+          <div>
+            <span class="detail-label">
+              <i class="bi bi-calendar-x"></i>
+              Warranty ended
+            </span>
+            <strong>
+              {{ product.warrantyEndDate | date:'dd MMM yyyy' }}
+            </strong>
+          </div>
+
+          <div class="days-expired">
+            <span class="detail-label">Time since expiry</span>
+            <strong>
+              {{ getDaysExpired(product) }} days ago
+            </strong>
+          </div>
+        </div>
       </div>
 
-      <span class="status-badge">
-        Expired
-      </span>
-
-    </div>
-
+    </article>
   </section>
+
+  <ng-template #emptyState>
+    <section class="empty-state">
+      <div class="empty-icon">
+        <i class="bi bi-shield-check"></i>
+      </div>
+
+      <h2>No Expired Warranties</h2>
+      <p>Products with expired warranties will appear here.</p>
+    </section>
+  </ng-template>
 
 </main>

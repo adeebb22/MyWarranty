@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyWarranty.Server.DTOs.Product;
 using MyWarranty.Server.Interfaces;
 using MyWarranty.Server.Models;
 
@@ -15,64 +16,61 @@ namespace MyWarranty.Server.Controllers
             _productService = productService;
         }
 
-        [HttpPost]
-        [Route("CreateProduct")]
-        public async Task<IActionResult> CreateProduct(
-            [FromBody] MyProduct product)
-        {
-            var created = await _productService.CreateProductAsync(product);
 
-            return created == null
-                ? NotFound("Product creation failed.")
-                : Ok(created);
-        }
-
-        [HttpPut]
-        [Route("UpdateProduct/{productId}")]
-        public async Task<IActionResult> UpdateProduct(
-            [FromRoute] int productId,
-            [FromBody] MyProduct product)
-        {
-            product.ProductId = productId;
-
-            var updated = await _productService.UpdateProductAsync(product);
-
-            return updated == null
-                ? NotFound("Product update failed.")
-                : Ok(updated);
-        }
-
-        [HttpGet]
-        [Route("GetProductById/{productId}")]
-        public async Task<IActionResult> GetProductById(
-            [FromRoute] int productId)
-        {
-            var result = await _productService.GetProductByIdAsync(productId);
-
-            return result == null
-                ? NotFound("Product not found.")
-                : Ok(result);
-        }
-
-        [HttpDelete]
-        [Route("DeleteProductById/{productId}")]
-        public async Task<IActionResult> DeleteProductById(
-            [FromRoute] int productId)
-        {
-            var deleted = await _productService.DeleteProductAsync(productId);
-
-            return deleted
-                ? NoContent()
-                : NotFound("Product not found.");
-        }
-
-        [HttpGet]
-        [Route("GetProducts")]
+        [HttpGet("GetAllProducts")]
         public async Task<IActionResult> GetProducts()
         {
-            var result = await _productService.GetAllProductsAsync();
+            var products = await _productService.GetAllProductsAsync();
+            return Ok(products);
+        }
 
-            return Ok(result);
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+
+            if (product == null)
+                return NotFound();
+
+            return Ok(product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(
+            [FromBody] CreateProductDto dto)
+        {
+            Console.WriteLine("POST CreateProduct endpoint reached");
+            var product = await _productService.CreateProductAsync(dto);
+
+            return CreatedAtAction(
+                nameof(GetProductById),
+                new { id = product.ProductId },
+                product
+            );
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateProduct(
+            int id,
+            [FromBody] UpdateProductDto dto)
+        {
+            var product = await _productService.UpdateProductAsync(id, dto);
+
+            if (product == null)
+                return NotFound();
+
+            return Ok(product);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var deleted = await _productService.DeleteProductAsync(id);
+
+            if (!deleted)
+                return NotFound();
+
+            return NoContent();
         }
     }
 }

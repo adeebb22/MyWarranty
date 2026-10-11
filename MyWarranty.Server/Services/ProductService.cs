@@ -1,4 +1,6 @@
-﻿using MyWarranty.Server.Interfaces;
+﻿
+using MyWarranty.Server.DTOs.Product;
+using MyWarranty.Server.Interfaces;
 using MyWarranty.Server.Models;
 using MyWarranty.Server.Repositories;
 
@@ -14,39 +16,135 @@ namespace MyWarranty.Server.Services
         }
 
         // Get all products
-        public async Task<List<MyProduct>> GetAllProductsAsync()
+        public async Task<List<ProductResponseDto>> GetAllProductsAsync()
         {
-            return await _repository.GetAllProductsAsync();
+            var products = await _repository.GetAllProductsAsync();
+
+            return products.Select(MapToResponse).ToList();
         }
 
         // Get product by ID
-        public async Task<MyProduct?> GetProductByIdAsync(int id)
+        public async Task<ProductResponseDto?> GetProductByIdAsync(int id)
         {
-            return await _repository.GetProductByIdAsync(id);
+            var product = await _repository.GetProductByIdAsync(id);
+
+            if (product == null)
+                return null;
+
+            return MapToResponse(product);
         }
 
         // Create product
-        public async Task<MyProduct> CreateProductAsync(MyProduct product)
+        public async Task<ProductResponseDto> CreateProductAsync(
+            CreateProductDto dto)
         {
-            // Temporary user ID
-            product.UserId = 1;
+            var product = new MyProduct
+            {
+                UserId = 1, // Temporary user ID
 
-            return await _repository.CreateProductAsync(product);
+                Name = dto.Name,
+                Brand = dto.Brand,
+                Category = dto.Category,
+                ModelNumber = dto.ModelNumber,
+                SerialNumber = dto.SerialNumber,
+
+                PurchaseDate = dto.PurchaseDate,
+                PurchasePrice = dto.PurchasePrice,
+                Store = dto.Store,
+
+                WarrantyStartDate = dto.WarrantyStartDate,
+                WarrantyEndDate = dto.WarrantyEndDate,
+
+                Notes = dto.Notes,
+                ProductImageUrl = dto.ProductImageUrl,
+                InvoiceUrl = dto.InvoiceUrl,
+
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = null
+            };
+
+            var savedProduct =
+                await _repository.CreateProductAsync(product);
+
+            return MapToResponse(savedProduct);
         }
 
         // Update product
-        public async Task<MyProduct?> UpdateProductAsync(MyProduct product)
+        public async Task<ProductResponseDto?> UpdateProductAsync(
+            int id,
+            UpdateProductDto dto)
         {
-            // Temporary user ID
-            product.UserId = 1;
+            var product = await _repository.GetProductByIdAsync(id);
 
-            return await _repository.UpdateProductAsync(product);
+            if (product == null)
+                return null;
+
+            // Update only editable properties
+            product.Name = dto.Name;
+            product.Brand = dto.Brand;
+            product.Category = dto.Category;
+            product.ModelNumber = dto.ModelNumber;
+            product.SerialNumber = dto.SerialNumber;
+
+            product.PurchaseDate = dto.PurchaseDate;
+            product.PurchasePrice = dto.PurchasePrice;
+            product.Store = dto.Store;
+
+            product.WarrantyStartDate = dto.WarrantyStartDate;
+            product.WarrantyEndDate = dto.WarrantyEndDate;
+
+            product.Notes = dto.Notes;
+            product.ProductImageUrl = dto.ProductImageUrl;
+            product.InvoiceUrl = dto.InvoiceUrl;
+
+            product.UpdatedAt = DateTime.UtcNow;
+
+            var updatedProduct =
+                await _repository.UpdateProductAsync(product);
+
+            if (updatedProduct == null)
+                return null;
+
+            return MapToResponse(updatedProduct);
         }
 
         // Delete product
         public async Task<bool> DeleteProductAsync(int id)
         {
             return await _repository.DeleteProductAsync(id);
+        }
+
+        // Convert entity to response DTO
+        private ProductResponseDto MapToResponse(MyProduct product)
+        {
+            return new ProductResponseDto
+            {
+                ProductId = product.ProductId,
+                UserId = product.UserId,
+
+                Name = product.Name,
+                Brand = product.Brand,
+                Category = product.Category,
+                ModelNumber = product.ModelNumber,
+                SerialNumber = product.SerialNumber,
+
+                PurchaseDate = product.PurchaseDate.ToString("yyyy-MM-dd"),
+                PurchasePrice = product.PurchasePrice,
+                Store = product.Store,
+
+                WarrantyStartDate =
+                    product.WarrantyStartDate.ToString("yyyy-MM-dd"),
+
+                WarrantyEndDate =
+                    product.WarrantyEndDate.ToString("yyyy-MM-dd"),
+
+                Notes = product.Notes,
+                ProductImageUrl = product.ProductImageUrl,
+                InvoiceUrl = product.InvoiceUrl,
+
+                CreatedAt = product.CreatedAt,
+                UpdatedAt = product.UpdatedAt
+            };
         }
     }
 }

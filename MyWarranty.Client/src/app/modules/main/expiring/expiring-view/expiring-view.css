@@ -1,0 +1,369 @@
+
+/* =========================
+   MAIN
+========================= */
+
+.main {
+  min-height: 100vh;
+  padding: 32px;
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.page-header p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================
+   PRODUCT COUNT
+========================= */
+
+.expiring-count {
+  flex-shrink: 0;
+  padding: 8px 13px;
+  border: 1px solid var(--gold-line);
+  border-radius: 20px;
+  background: var(--gold-soft);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* =========================
+   PRODUCT GRID
+========================= */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+/* =========================
+   PRODUCT CARD
+========================= */
+
+.product-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--text);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* =========================
+   PRODUCT IMAGE
+========================= */
+
+.product-image-wrap {
+  width: 100px;
+  height: 110px;
+  flex: 0 0 100px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+.product-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-placeholder {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 30px;
+}
+
+/* =========================
+   PRODUCT INFORMATION
+========================= */
+
+.product-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.product-name {
+  min-width: 0;
+}
+
+.product-name h3 {
+  margin: 0 0 5px;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.product-name p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* =========================
+   STATUS BADGE
+========================= */
+
+.status-badge {
+  flex-shrink: 0;
+  padding: 5px 8px;
+  border: 1px solid var(--gold-line);
+  border-radius: 20px;
+  background: var(--gold-soft);
+  color: #946200;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* =========================
+   WARRANTY DETAILS
+========================= */
+
+.warranty-details {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.warranty-details > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px 10px;
+}
+
+.detail-label {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.warranty-details strong {
+  color: var(--text);
+  font-size: 12px;
+}
+
+.days-remaining strong {
+  color: #946200;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+
+.empty-state {
+  display: flex;
+  min-height: 300px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--text);
+  text-align: center;
+}
+
+.empty-icon {
+  display: flex;
+  width: 60px;
+  height: 60px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--primary);
+  font-size: 26px;
+}
+
+.empty-state h2 {
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: 20px;
+}
+
+.empty-state p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 991.98px) {
+  .main {
+    padding: 24px;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  }
+
+  .product-image-wrap {
+    width: 88px;
+    height: 100px;
+    flex-basis: 88px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 575px) {
+  .main {
+    padding: 16px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .product-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .product-card {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .product-image-wrap {
+    width: 80px;
+    height: 95px;
+    flex-basis: 80px;
+  }
+
+  .product-heading {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .warranty-details > div {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .status-badge {
+    align-self: flex-start;
+  }
+
+  .empty-state {
+    min-height: 260px;
+    padding: 28px 18px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 360px) {
+  .main {
+    padding: 12px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+  }
+
+  .product-card {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .product-image-wrap {
+    width: 68px;
+    height: 82px;
+    flex-basis: 68px;
+  }
+
+  .product-name h3 {
+    font-size: 14px;
+  }
+
+  .product-name p,
+  .detail-label {
+    font-size: 11px;
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .main,
+  .product-card,
+  .empty-state {
+    transition: none;
+  }
+
+  .product-card:hover {
+    transform: none;
+  }
+}

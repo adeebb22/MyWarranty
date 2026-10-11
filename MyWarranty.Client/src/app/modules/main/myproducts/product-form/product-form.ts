@@ -27,9 +27,10 @@ export class ProductForm implements OnChanges {
 
   categoryOptions = ['Phone', 'Laptop', 'TV', 'Refrigerator', 'Washing Machine', 'Other'];
   durationOptions = [6, 12, 24, 36, 60];
-
+showInvoicePreview = false;
   productImagePreview: string | null = null;
-  invoiceFileName: string | null = null;
+invoicePreview: string | null = null;
+invoiceFileName: string | null = null;
 
   ProductForm: FormGroup;
 
@@ -83,31 +84,74 @@ export class ProductForm implements OnChanges {
   }
 
   removeProductImage(): void { this.productImagePreview = null; }
+isPdfDocument(url: string): boolean {
+  return url.startsWith('data:application/pdf') ||
+         /\.pdf(?:[?#].*)?$/i.test(url);
+}
 
-  onInvoiceSelected(event: Event): void {
-    const file = (event.target as HTMLInputElement).files?.[0];
-    if (!file) return;
-    this.invoiceFileName = file.name;
+isImageDocument(url: string): boolean {
+  return url.startsWith('data:image/') ||
+         /\.(jpg|jpeg|png|gif|webp)(?:[?#].*)?$/i.test(url);
+}
+
+openInvoicePreview(): void {
+  this.showInvoicePreview = true;
+}
+  
+onInvoiceSelected(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+
+  if (!file) return;
+
+  const isPdf = file.type === 'application/pdf';
+  const isImage = file.type.startsWith('image/');
+
+  if (!isPdf && !isImage) {
+    alert('Please select a PDF or image file.');
+    input.value = '';
+    return;
   }
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    this.invoicePreview = reader.result as string;
+    this.invoiceFileName = file.name;
+  };
+
+  reader.onerror = () => {
+    alert('Unable to read the selected invoice.');
+  };
+
+  reader.readAsDataURL(file);
+}
+
 
   private patchFromProduct(product: Product): void {
-    this.ProductForm.patchValue({ ...product });
-    this.productImagePreview = product.productImageUrl || null;
-    this.invoiceFileName = product.invoiceUrl ? 'Invoice on file' : null;
-  }
+  this.ProductForm.patchValue({ ...product });
+
+  this.productImagePreview = product.productImageUrl || null;
+  this.invoicePreview = product.invoiceUrl || null;
+
+  this.invoiceFileName = product.invoiceUrl
+    ? 'Existing invoice'
+    : null;
+}
 
   private resetForm(): void {
     this.ProductForm.reset({
       name: '', brand: '', category: 'Phone', modelNumber: '', serialNumber: '',
       purchaseDate: '', purchasePrice: null, store: '',
-      warrantyStartDate: '', warrantyDurationMonths: 12, warrantyEndDate: '', notes: '',
+      warrantyStartDate: '', warrantyEndDate: '', notes: '',
     });
     this.productImagePreview = null;
     this.invoiceFileName = null;
+    this.invoicePreview = null;
   }
 
   saveProduct(): void {
-
+  
     if (this.ProductForm.invalid) {
       this.ProductForm.markAllAsTouched();
       this.currentStep = 1;
@@ -130,7 +174,7 @@ export class ProductForm implements OnChanges {
       warrantyEndDate: value.warrantyEndDate,
       notes: value.notes,
       productImageUrl: this.productImagePreview ?? '',
-      invoiceUrl: this.product?.invoiceUrl ?? '',
+     invoiceUrl: this.invoicePreview ?? '',
     };
     this.save.emit(result);
   }

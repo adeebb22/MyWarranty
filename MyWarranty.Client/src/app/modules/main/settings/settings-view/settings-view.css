@@ -1,10 +1,14 @@
 
+/* =========================
+   MAIN
+========================= */
+
 .main {
   padding: 32px;
-  background: #f7f5ef;
+  background: var(--bg);
+  color: var(--text);
   min-height: 100vh;
 }
-
 
 /* =========================
    PAGE HEADER
@@ -16,34 +20,28 @@
 
 .page-header h1 {
   margin: 0 0 6px;
-
-  color: #1b2a23;
+  color: var(--text);
   font-size: 28px;
   font-weight: 700;
 }
 
 .page-header p {
   margin: 0;
-
-  color: #6b756f;
+  color: var(--text-muted);
   font-size: 14px;
 }
-
 
 /* =========================
    SETTINGS SECTION
 ========================= */
 
 .settings-section {
-  background: #ffffff;
-
-  border: 1px solid #e7e2d3;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 14px;
-
   padding: 24px;
   margin-bottom: 20px;
 }
-
 
 /* =========================
    SECTION HEADER
@@ -55,19 +53,16 @@
 
 .section-header h2 {
   margin: 0 0 5px;
-
-  color: #1b2a23;
+  color: var(--text);
   font-size: 18px;
   font-weight: 600;
 }
 
 .section-header p {
   margin: 0;
-
-  color: #737c76;
+  color: var(--text-muted);
   font-size: 13px;
 }
-
 
 /* =========================
    FORM GRID
@@ -86,8 +81,7 @@
 
 .form-group label {
   margin-bottom: 8px;
-
-  color: #1b2a23;
+  color: var(--text);
   font-size: 13px;
   font-weight: 600;
 }
@@ -95,28 +89,32 @@
 .form-control {
   width: 100%;
   height: 44px;
-
   padding: 0 13px;
 
-  border: 1px solid #ddd8ca;
+  border: 1px solid var(--border);
   border-radius: 8px;
 
-  background: #ffffff;
-
-  color: #1b2a23;
+  background: var(--card);
+  color: var(--text);
   font-size: 14px;
 
   outline: none;
 
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .form-control:focus {
-  border-color: #1c4a36;
-
-  box-shadow: 0 0 0 3px rgba(28, 74, 54, 0.08);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(121, 185, 154, 0.12);
 }
 
+.form-control::placeholder {
+  color: var(--text-faint);
+}
 
 /* =========================
    SETTING ROW
@@ -126,25 +124,21 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: 16px 0;
 }
 
 .setting-row h3 {
   margin: 0 0 5px;
-
-  color: #1b2a23;
+  color: var(--text);
   font-size: 15px;
   font-weight: 600;
 }
 
 .setting-row p {
   margin: 0;
-
-  color: #737c76;
+  color: var(--text-muted);
   font-size: 13px;
 }
-
 
 /* =========================
    TOGGLE SWITCH
@@ -152,14 +146,13 @@
 
 .switch {
   position: relative;
-
   width: 48px;
   height: 26px;
-
   flex-shrink: 0;
 }
 
 .switch input {
+  position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
@@ -168,44 +161,42 @@
 .slider {
   position: absolute;
   inset: 0;
-
   cursor: pointer;
 
-  background: #d8d8d8;
-
+  background: var(--border);
   border-radius: 30px;
 
-  transition: 0.25s;
+  transition: background 0.25s ease;
 }
 
 .slider::before {
   content: "";
-
   position: absolute;
 
   width: 20px;
   height: 20px;
-
   left: 3px;
   top: 3px;
 
   background: #ffffff;
-
   border-radius: 50%;
 
-  transition: 0.25s;
-
+  transition: transform 0.25s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .switch input:checked + .slider {
-  background: #1c4a36;
+  background: var(--primary);
 }
 
 .switch input:checked + .slider::before {
   transform: translateX(22px);
 }
 
+.switch input:focus-visible + .slider {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
 
 /* =========================
    ACCOUNT ACTIONS
@@ -217,20 +208,18 @@
   gap: 12px;
 }
 
-
 /* =========================
    SAVE BUTTON
 ========================= */
 
 .btn-save {
   height: 42px;
-
   padding: 0 18px;
 
   border: none;
   border-radius: 8px;
 
-  background: #1c4a36;
+  background: var(--sidebar);
   color: #ffffff;
 
   font-size: 13px;
@@ -246,10 +235,9 @@
 }
 
 .btn-save:hover {
-  background: #12372a;
+  background: var(--primary-deep);
   transform: translateY(-1px);
 }
-
 
 /* =========================
    LOGOUT BUTTON
@@ -257,13 +245,12 @@
 
 .btn-logout {
   height: 42px;
-
   padding: 0 18px;
 
-  border: 1px solid #e1dcd0;
+  border: 1px solid var(--border);
   border-radius: 8px;
 
-  background: #ffffff;
+  background: var(--card);
   color: #b42318;
 
   font-size: 13px;
@@ -275,21 +262,39 @@
   align-items: center;
   gap: 8px;
 
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .btn-logout:hover {
-  background: #fff5f4;
-  border-color: #e5b8b4;
+  background: var(--bg);
+  border-color: var(--text-faint);
 }
 
+/* =========================
+   THEME TRANSITIONS
+========================= */
+
+.main,
+.settings-section,
+.form-control {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
 
 /* =========================
    RESPONSIVE
 ========================= */
+@media (max-width: 768px) {
+  .form-control {
+    font-size: 16px;
+  }
+}
 
 @media (max-width: 768px) {
-
   .main {
     padding: 20px;
   }
@@ -301,12 +306,9 @@
   .page-header h1 {
     font-size: 24px;
   }
-
 }
 
-
 @media (max-width: 480px) {
-
   .main {
     padding: 16px;
   }
@@ -330,5 +332,4 @@
     justify-content: center;
     width: 100%;
   }
-
 }

@@ -30,6 +30,43 @@
   --sidebar-text-dim: #7fa08f;
 }
 
+/* ===== Dark Theme ===== */
+:root[data-theme='dark'] {
+  --primary: #79b99a;
+  --primary-deep: #a3d5ba;
+
+  --gold: #e2c15b;
+  --gold-soft: #3b3522;
+  --gold-line: rgba(226, 193, 91, 0.35);
+
+  --bg: #151a17;
+  --card: #202823;
+  --border: #39443d;
+
+  --text: #f1f5f2;
+  --text-muted: #b2beb6;
+  --text-faint: #8e9b92;
+
+  --sidebar: #111a15;
+  --sidebar-hover: rgba(255, 255, 255, 0.08);
+  --sidebar-text: #d4e5da;
+  --sidebar-text-dim: #9bb3a4;
+
+  color-scheme: dark;
+}
+
+/* Smoothly transition the main theme colors */
+body,
+.main,
+.settings-section,
+.form-control {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+
 /* ===== Reset ===== */
 * {
   box-sizing: border-box;

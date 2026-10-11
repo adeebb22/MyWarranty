@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { EventEmitter,Output } from '@angular/core';
+
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -8,7 +8,7 @@ import { EventEmitter,Output } from '@angular/core';
   templateUrl: './navbar.html',
 })
 export class Navbar {
-   @Output() toggleSidebar = new EventEmitter<void>();
+  @Output() toggleSidebar = new EventEmitter<void>();
 
-   searchTerm = '';
+  searchTerm = '';
 }

@@ -1,0 +1,86 @@
+
+<main class="main">
+
+  <header class="page-header">
+    <div>
+      <h1>Expiring Soon</h1>
+      <p>Products whose warranties expire within the next 30 days.</p>
+    </div>
+
+    <span class="expiring-count">
+      {{ expiringProducts.length }} products
+    </span>
+  </header>
+
+  <section
+    class="product-grid"
+    *ngIf="expiringProducts.length > 0; else emptyState">
+
+    <article
+      class="product-card"
+      *ngFor="let product of expiringProducts">
+
+      <div class="product-image-wrap">
+        <img
+          *ngIf="product.productImageUrl; else defaultImage"
+          class="product-image"
+          [src]="product.productImageUrl"
+          [alt]="product.name"
+          (error)="product.productImageUrl = ''">
+
+        <ng-template #defaultImage>
+          <div class="product-placeholder">
+            <i class="bi bi-box-seam"></i>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="product-info">
+        <div class="product-heading">
+          <div class="product-name">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.brand || product.category }}</p>
+          </div>
+
+          <span class="status-badge">
+            Expiring Soon
+          </span>
+        </div>
+
+        <div class="warranty-details">
+          <div>
+            <span class="detail-label">
+              <i class="bi bi-calendar-event"></i>
+              Warranty ends
+            </span>
+            <strong>
+              {{ product.warrantyEndDate | date:'dd MMM yyyy' }}
+            </strong>
+          </div>
+
+          <div class="days-remaining">
+            <span class="detail-label">Time remaining</span>
+            <strong>
+              {{ getDaysRemaining(product) }} days left
+            </strong>
+          </div>
+        </div>
+      </div>
+
+    </article>
+  </section>
+
+  <ng-template #emptyState>
+    <section class="empty-state">
+      <div class="empty-icon">
+        <i class="bi bi-hourglass"></i>
+      </div>
+
+      <h2>No warranties expiring soon</h2>
+      <p>
+        Products expiring within the next 30 days will appear here.
+      </p>
+    </section>
+  </ng-template>
+
+</main>

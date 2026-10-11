@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Product } from '../../../../models/product.model';
 import { ProductsService } from '../../../../services/products-service';
 import { FormsModule } from '@angular/forms';
@@ -15,22 +15,28 @@ export class ExpiredView implements OnInit {
   expiredProducts: Product[] = [];
 
   constructor(
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private cdr: ChangeDetectorRef
   ) { }
 
-  ngOnInit(): void {
+  
+ngOnInit(): void {
+  this.productsService.getExpiredProducts().subscribe({
+    next: (data) => {
+  this.expiredProducts = data;
+  this.cdr.detectChanges();
 
-    this.productsService.getData().subscribe(products => {
+  console.log('Expired products displayed:', this.expiredProducts.length);
+},
+    error: (error) => {
+      console.error('Error loading expired products:', error);
+    }
+  });
+}
 
-      this.products = products;
-
-      this.expiredProducts = products.filter(
-        product =>
-          this.productsService.getWarrantyStatus(product) === 'Expired'
-      );
-
-    });
-
-  }
-
+getDaysExpired(product: Product): number {
+  return Math.abs(
+    this.productsService.getDaysRemaining(product)
+  );
+}
 }
