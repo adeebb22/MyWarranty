@@ -14,6 +14,8 @@ export interface Product {
 
   warrantyStartDate: string; // yyyy-MM-dd
   warrantyEndDate: string;   // yyyy-MM-dd
+  warrantyDuration?: number;
+  warrantyDurationUnit?: 'Years' | 'Months' | 'Days';
 
   notes: string;
   productImageUrl: string;

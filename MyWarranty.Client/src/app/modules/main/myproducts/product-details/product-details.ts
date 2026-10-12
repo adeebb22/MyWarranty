@@ -69,6 +69,73 @@ isImageDocument(url: string): boolean {
     this.activeTab = tab;
   }
 
+  get warrantyDurationText(): string {
+  const startValue = this.product?.warrantyStartDate;
+  const endValue = this.product?.warrantyEndDate;
+
+  if (!startValue || !endValue) {
+    return '—';
+  }
+
+  const [startYear, startMonth, startDay] =
+    startValue.slice(0, 10).split('-').map(Number);
+
+  const [endYear, endMonth, endDay] =
+    endValue.slice(0, 10).split('-').map(Number);
+
+  const start = new Date(startYear, startMonth - 1, startDay);
+  const end = new Date(endYear, endMonth - 1, endDay);
+
+  if (
+    Number.isNaN(start.getTime()) ||
+    Number.isNaN(end.getTime()) ||
+    end < start
+  ) {
+    return '—';
+  }
+
+  const months =
+    (end.getFullYear() - start.getFullYear()) * 12 +
+    end.getMonth() - start.getMonth();
+
+  const checkDate = new Date(
+    start.getFullYear(),
+    start.getMonth() + months,
+    1
+  );
+
+  const lastDay = new Date(
+    checkDate.getFullYear(),
+    checkDate.getMonth() + 1,
+    0
+  ).getDate();
+
+  checkDate.setDate(Math.min(start.getDate(), lastDay));
+
+  if (checkDate.getTime() === end.getTime()) {
+    const years = Math.floor(months / 12);
+    const remainingMonths = months % 12;
+
+    if (years > 0 && remainingMonths > 0) {
+      return `${years} year(s), ${remainingMonths} month(s)`;
+    }
+
+    if (years > 0) {
+      return `${years} year(s)`;
+    }
+
+    return `${months} month(s)`;
+  }
+
+  const days = Math.round(
+    (Date.UTC(endYear, endMonth - 1, endDay) -
+      Date.UTC(startYear, startMonth - 1, startDay)) /
+      86400000
+  );
+
+  return `${days} day(s)`;
+}
+
   get status(): string {
     return this.productsService.getWarrantyStatus(this.product);
   }

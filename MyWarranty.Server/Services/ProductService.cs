@@ -14,6 +14,57 @@ namespace MyWarranty.Server.Services
         {
             _repository = repository;
         }
+        private static DateTime CalculateWarrantyEndDate(
+    DateTime startDate,
+    decimal duration,
+    string unit)
+        {
+            startDate = startDate.Date;
+
+            if (duration <= 0 || duration > 100)
+            {
+                throw new ArgumentException(
+                    "Warranty duration must be greater than zero and no more than 100.");
+            }
+
+            switch (unit.Trim().ToLowerInvariant())
+            {
+                case "years":
+                    // Only whole and half years are supported.
+                    if (duration * 2 != decimal.Truncate(duration * 2))
+                    {
+                        throw new ArgumentException(
+                            "Warranty duration in years must use increments of 0.5.");
+                    }
+
+                    return startDate.AddMonths(
+                        decimal.ToInt32(duration * 12));
+
+                case "months":
+                    if (duration != decimal.Truncate(duration))
+                    {
+                        throw new ArgumentException(
+                            "Warranty duration in months must be a whole number.");
+                    }
+
+                    return startDate.AddMonths(
+                        decimal.ToInt32(duration));
+
+                case "days":
+                    if (duration != decimal.Truncate(duration))
+                    {
+                        throw new ArgumentException(
+                            "Warranty duration in days must be a whole number.");
+                    }
+
+                    return startDate.AddDays(
+                        decimal.ToInt32(duration));
+
+                default:
+                    throw new ArgumentException(
+                        "Warranty duration unit must be Years, Months, or Days.");
+            }
+        }
 
         // Get all products
         public async Task<List<ProductResponseDto>> GetAllProductsAsync()
@@ -52,8 +103,11 @@ namespace MyWarranty.Server.Services
                 PurchasePrice = dto.PurchasePrice,
                 Store = dto.Store,
 
-                WarrantyStartDate = dto.WarrantyStartDate,
-                WarrantyEndDate = dto.WarrantyEndDate,
+                WarrantyStartDate = dto.WarrantyStartDate.Date,
+                WarrantyEndDate = CalculateWarrantyEndDate(
+                                            dto.WarrantyStartDate,
+                                            dto.WarrantyDuration,
+                                            dto.WarrantyDurationUnit),
 
                 Notes = dto.Notes,
                 ProductImageUrl = dto.ProductImageUrl,
@@ -90,8 +144,11 @@ namespace MyWarranty.Server.Services
             product.PurchasePrice = dto.PurchasePrice;
             product.Store = dto.Store;
 
-            product.WarrantyStartDate = dto.WarrantyStartDate;
-            product.WarrantyEndDate = dto.WarrantyEndDate;
+            product.WarrantyStartDate = dto.WarrantyStartDate.Date;
+            product.WarrantyEndDate = CalculateWarrantyEndDate(
+                dto.WarrantyStartDate,
+                dto.WarrantyDuration,
+                dto.WarrantyDurationUnit);
 
             product.Notes = dto.Notes;
             product.ProductImageUrl = dto.ProductImageUrl;

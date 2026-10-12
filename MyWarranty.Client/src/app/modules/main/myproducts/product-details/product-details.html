@@ -7,8 +7,14 @@
 
     <div class="title-block">
       <h1>{{ product.name }}</h1>
-      <span class="status-pill" [class.active]="status === 'Active'"
-        [class.expiring-soon]="status === 'Expiring Soon'" [class.expired]="status === 'Expired'">{{ status }}</span>
+
+      <span
+        class="status-pill"
+        [class.active]="status === 'Active'"
+        [class.expiring-soon]="status === 'Expiring Soon'"
+        [class.expired]="status === 'Expired'">
+        {{ status }}
+      </span>
     </div>
 
     <div class="header-actions">
@@ -18,7 +24,10 @@
       </button>
 
       <div class="more-menu-wrapper">
-        <button class="btn-more" type="button" (click)="showMoreMenu = !showMoreMenu">
+        <button
+          class="btn-more"
+          type="button"
+          (click)="showMoreMenu = !showMoreMenu">
           <i class="bi bi-three-dots"></i>
         </button>
 
@@ -33,11 +42,20 @@
   </div>
 
   <div class="sub-meta">
-    <span class="meta-item"><i class="bi bi-tag"></i> {{ product.brand }} · {{ product.modelNumber || '—' }}</span>
-    <span class="meta-item"><i class="bi bi-upc-scan"></i> {{ product.serialNumber || '—' }}</span>
+    <span class="meta-item">
+      <i class="bi bi-tag"></i>
+      {{ product.brand }} · {{ product.modelNumber || '—' }}
+    </span>
+
+    <span class="meta-item">
+      <i class="bi bi-upc-scan"></i>
+      {{ product.serialNumber || '—' }}
+    </span>
   </div>
 
+  <!-- Statistics -->
   <div class="stat-cards">
+
     <div class="stat-card">
       <span class="stat-label">PURCHASE PRICE</span>
       <span class="stat-value blue">₹{{ product.purchasePrice }}</span>
@@ -50,16 +68,29 @@
     </div>
 
     <div class="stat-card">
-      <span class="stat-label">{{ status === 'Expired' ? 'DAYS OVERDUE' : 'DAYS REMAINING' }}</span>
-      <span class="stat-value" [class.red]="status === 'Expired'" [class.green]="status !== 'Expired'">
+      <span class="stat-label">
+        {{ status === 'Expired' ? 'DAYS OVERDUE' : 'DAYS REMAINING' }}
+      </span>
+
+      <span
+        class="stat-value"
+        [class.red]="status === 'Expired'"
+        [class.green]="status !== 'Expired'">
         {{ status === 'Expired' ? -daysRemaining : daysRemaining }}
       </span>
+
       <span class="stat-sub">days</span>
     </div>
+
   </div>
 
+  <!-- Tabs -->
   <div class="tab-strip">
-    <button *ngFor="let tab of tabs" class="tab-btn" [class.active]="activeTab === tab.key" type="button"
+    <button
+      *ngFor="let tab of tabs"
+      class="tab-btn"
+      [class.active]="activeTab === tab.key"
+      type="button"
       (click)="setTab(tab.key)">
       {{ tab.label }}
     </button>
@@ -67,129 +98,188 @@
 
   <div class="tab-content">
 
+    <!-- Overview Tab -->
     <div *ngIf="activeTab === 'overview'" class="overview-panel">
+
       <div class="info-card">
         <h5>PRODUCT INFORMATION</h5>
-        <div class="info-row"><span>Product Name</span><strong>{{ product.name }}</strong></div>
-        <div class="info-row"><span>Brand</span><strong>{{ product.brand }}</strong></div>
-        <div class="info-row"><span>Category</span><strong>{{ product.category }}</strong></div>
-        <div class="info-row"><span>Model Number</span><strong>{{ product.modelNumber || '—' }}</strong></div>
-        <div class="info-row"><span>Serial Number</span><strong>{{ product.serialNumber || '—' }}</strong></div>
+
+        <div class="info-row">
+          <span>Product Name</span>
+          <strong>{{ product.name }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Brand</span>
+          <strong>{{ product.brand }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Category</span>
+          <strong>{{ product.category }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Model Number</span>
+          <strong>{{ product.modelNumber || '—' }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Serial Number</span>
+          <strong>{{ product.serialNumber || '—' }}</strong>
+        </div>
       </div>
 
       <div class="info-card">
         <h5>PURCHASE INFORMATION</h5>
-        <div class="info-row"><span>Purchase Date</span><strong>{{ product.purchaseDate }}</strong></div>
-        <div class="info-row"><span>Purchase Price</span><strong>₹{{ product.purchasePrice }}</strong></div>
-        <div class="info-row"><span>Store / Seller</span><strong>{{ product.store || '—' }}</strong></div>
+
+        <div class="info-row">
+          <span>Purchase Date</span>
+          <strong>{{ product.purchaseDate }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Purchase Price</span>
+          <strong>₹{{ product.purchasePrice }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Store / Seller</span>
+          <strong>{{ product.store || '—' }}</strong>
+        </div>
       </div>
 
       <div class="info-card" *ngIf="product.notes">
         <h5>ADDITIONAL NOTES</h5>
         <p class="description-text">{{ product.notes }}</p>
       </div>
+
     </div>
 
+    <!-- Warranty Tab -->
     <div *ngIf="activeTab === 'warranty'" class="overview-panel">
+
       <div class="info-card">
         <h5>WARRANTY INFORMATION</h5>
-        <div class="info-row"><span>Warranty Start</span><strong>{{ product.warrantyStartDate }}</strong></div>
-        <div class="info-row"><span>Warranty End</span><strong>{{ product.warrantyEndDate }}</strong></div>
+
+        <div class="info-row">
+          <span>Warranty Start</span>
+          <strong>{{ product.warrantyStartDate }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Warranty Duration</span>
+          <strong>{{ warrantyDurationText }}</strong>
+        </div>
+
+        <div class="info-row">
+          <span>Warranty End</span>
+          <strong>{{ product.warrantyEndDate }}</strong>
+        </div>
+
         <div class="info-row">
           <span>Status</span>
-          <span class="status-pill" [class.active]="status === 'Active'"
-            [class.expiring-soon]="status === 'Expiring Soon'" [class.expired]="status === 'Expired'">{{ status }}</span>
+
+          <span
+            class="status-pill"
+            [class.active]="status === 'Active'"
+            [class.expiring-soon]="status === 'Expiring Soon'"
+            [class.expired]="status === 'Expired'">
+            {{ status }}
+          </span>
         </div>
+
       </div>
+
     </div>
 
-    
-<div *ngIf="activeTab === 'documents'" class="overview-panel">
+    <!-- Documents Tab -->
+    <div *ngIf="activeTab === 'documents'" class="overview-panel">
 
-  <!-- Product Photo -->
-  <div class="info-card" *ngIf="product.productImageUrl">
-    <h5>PRODUCT PHOTO</h5>
+      <!-- Product Photo -->
+      <div class="info-card" *ngIf="product.productImageUrl">
+        <h5>PRODUCT PHOTO</h5>
 
-    <img
-      [src]="product.productImageUrl"
-      class="doc-image clickable-document"
-      alt="Product photo"
-      (click)="openDocument(product.productImageUrl)"
-    />
+        <img
+          [src]="product.productImageUrl"
+          class="doc-image clickable-document"
+          alt="Product photo"
+          (click)="openDocument(product.productImageUrl)">
 
-    <button
-      type="button"
-      class="doc-link"
-      (click)="openDocument(product.productImageUrl)">
-      <i class="bi bi-zoom-in"></i>
-      View Photo
-    </button>
-  </div>
+        <button
+          type="button"
+          class="doc-link"
+          (click)="openDocument(product.productImageUrl)">
+          <i class="bi bi-zoom-in"></i>
+          View Photo
+        </button>
+      </div>
 
-  <!-- Invoice -->
-  <div class="info-card" *ngIf="product.invoiceUrl">
-    <h5>PURCHASE INVOICE</h5>
+      <!-- Purchase Invoice -->
+      <div class="info-card" *ngIf="product.invoiceUrl">
+        <h5>PURCHASE INVOICE</h5>
 
-    <img
-      *ngIf="isImageDocument(product.invoiceUrl)"
-      [src]="product.invoiceUrl"
-      class="doc-image clickable-document"
-      alt="Purchase invoice"
-      (click)="openDocument(product.invoiceUrl)"
-    />
+        <img
+          *ngIf="isImageDocument(product.invoiceUrl)"
+          [src]="product.invoiceUrl"
+          class="doc-image clickable-document"
+          alt="Purchase invoice"
+          (click)="openDocument(product.invoiceUrl)">
 
-    <button
-      type="button"
-      class="doc-link"
-      (click)="openDocument(product.invoiceUrl)">
-      <i
-        class="bi"
-        [ngClass]="isPdfDocument(product.invoiceUrl)
-          ? 'bi-file-earmark-pdf'
-          : 'bi-eye'">
-      </i>
-      {{ isPdfDocument(product.invoiceUrl)
-          ? 'View Invoice PDF'
-          : 'View Invoice Image' }}
-    </button>
-  </div>
+        <button
+          type="button"
+          class="doc-link"
+          (click)="openDocument(product.invoiceUrl)">
 
-  <p
-    class="empty-text"
-    *ngIf="!product.productImageUrl && !product.invoiceUrl">
-    No documents uploaded yet.
-  </p>
+          <i
+            class="bi"
+            [ngClass]="isPdfDocument(product.invoiceUrl)
+              ? 'bi-file-earmark-pdf'
+              : 'bi-eye'">
+          </i>
 
-</div>
+          {{ isPdfDocument(product.invoiceUrl)
+              ? 'View Invoice PDF'
+              : 'View Invoice Image' }}
+        </button>
+      </div>
 
-<!-- Document Viewer -->
-<div
-  class="document-modal"
-  *ngIf="selectedDocument"
-  (click)="closeDocument()">
+      <p
+        class="empty-text"
+        *ngIf="!product.productImageUrl && !product.invoiceUrl">
+        No documents uploaded yet.
+      </p>
 
-  <button
-    type="button"
-    class="document-modal-close"
-    aria-label="Close document"
-    (click)="closeDocument()">
-    &times;
-  </button>
+    </div>
 
-  <iframe
-    *ngIf="selectedDocumentType === 'pdf'"
-    [src]="selectedDocument | safeUrl"
-    title="Purchase invoice PDF"
-    (click)="$event.stopPropagation()">
-  </iframe>
+    <!-- Document Viewer -->
+    <div
+      class="document-modal"
+      *ngIf="selectedDocument"
+      (click)="closeDocument()">
 
-  <img
-    *ngIf="selectedDocumentType === 'image'"
-    [src]="selectedDocument"
-    alt="Document preview"
-    (click)="$event.stopPropagation()">
-</div>
+      <button
+        type="button"
+        class="document-modal-close"
+        aria-label="Close document"
+        (click)="closeDocument()">
+        &times;
+      </button>
 
+      <iframe
+        *ngIf="selectedDocumentType === 'pdf'"
+        [src]="selectedDocument | safeUrl"
+        title="Purchase invoice PDF"
+        (click)="$event.stopPropagation()">
+      </iframe>
+
+      <img
+        *ngIf="selectedDocumentType === 'image'"
+        [src]="selectedDocument"
+        alt="Document preview"
+        (click)="$event.stopPropagation()">
+
+    </div>
 
   </div>
 

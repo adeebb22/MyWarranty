@@ -262,40 +262,58 @@
           <!-- Warranty Start + Duration -->
 
 
-          <div class="product-form-group">
 
+          <!-- Warranty Start Date -->
+          <div class="product-form-group">
             <label class="product-form-label">
               WARRANTY START DATE
-            </label>
-
-            <input type="date" class="product-form-control" formControlName="warrantyStartDate">
-
-          </div>
-
-
-          <!-- Warranty End -->
-          <div class="product-form-group">
-
-            <label class="product-form-label">
-              WARRANTY END DATE
               <span class="required">*</span>
             </label>
 
-            <input type="date" class="product-form-control" formControlName="warrantyEndDate" [class.is-invalid]="
-                ProductForm.get('warrantyEndDate')?.touched &&
-                ProductForm.get('warrantyEndDate')?.invalid
-              ">
+            <input type="date" class="product-form-control" formControlName="warrantyStartDate"
+              (change)="updateWarrantyEndDate()" />
+          </div>
 
-            <div class="validation-message" *ngIf="
-                ProductForm.get('warrantyEndDate')?.touched &&
-                ProductForm.get('warrantyEndDate')?.invalid
-              ">
+          <!-- Warranty Duration -->
+          <div class="form-row two-col">
+            <div class="product-form-group">
+              <label class="product-form-label">
+                WARRANTY DURATION
+                <span class="required">*</span>
+              </label>
 
-              Warranty end date is required
+              <input type="number" class="product-form-control" formControlName="warrantyDuration" min="0.5"
+                [step]="ProductForm.get('warrantyDurationUnit')?.value === 'Years' ? 0.5 : 1" placeholder="e.g. 1.5"
+                (input)="updateWarrantyEndDate()" />
 
+              <div class="validation-message" *ngIf="ProductForm.get('warrantyDuration')?.touched &&
+             ProductForm.get('warrantyDuration')?.invalid">
+                Enter a valid positive duration.
+              </div>
             </div>
 
+            <div class="product-form-group">
+              <label class="product-form-label">DURATION UNIT</label>
+
+              <select class="product-select" formControlName="warrantyDurationUnit" placeholder="Years" (change)="updateWarrantyEndDate()">
+                <option value="Years">Years</option>
+                <option value="Months">Months</option>
+                <option value="Days">Days</option>
+              </select>
+            </div>
           </div>
+
+          <!-- Calculated Warranty End Date -->
+          <div class="product-form-group">
+            <label class="product-form-label">CALCULATED WARRANTY END DATE</label>
+
+            <input type="date" class="product-form-control" [value]="calculatedWarrantyEndDate" readonly />
+
+            <small class="hint-text">
+              This date is calculated automatically from the start date and duration.
+            </small>
+          </div>
+
 
 
           <!-- Notes -->

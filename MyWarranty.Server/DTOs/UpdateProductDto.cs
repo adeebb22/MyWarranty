@@ -1,10 +1,16 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace MyWarranty.Server.DTOs.Product
 {
     public class UpdateProductDto
     {
+        [Required]
         public string Name { get; set; } = string.Empty;
+
+        [Required]
         public string Brand { get; set; } = string.Empty;
+
+        [Required]
         public string Category { get; set; } = string.Empty;
 
         public string? ModelNumber { get; set; }
@@ -15,7 +21,12 @@ namespace MyWarranty.Server.DTOs.Product
         public string? Store { get; set; }
 
         public DateTime WarrantyStartDate { get; set; }
-        public DateTime WarrantyEndDate { get; set; }
+
+        [Range(0.5, 100)]
+        public decimal WarrantyDuration { get; set; }
+
+        [Required]
+        public string WarrantyDurationUnit { get; set; } = string.Empty;
 
         public string? Notes { get; set; }
         public string? ProductImageUrl { get; set; }
