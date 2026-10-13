@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductsService {
  
-private apiUrl = 'https://localhost:7192/api/Products';
+private apiUrl = 'https://mywarrantybackend.runasp.net/api/Product';
 
 constructor(private http: HttpClient) {}
 
