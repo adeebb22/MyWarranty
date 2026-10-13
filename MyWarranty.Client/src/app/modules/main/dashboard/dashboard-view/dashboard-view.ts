@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../../models/product.model';
 import { StatCardData } from '../../../../models/dashboard.model';
 import { ProductsService } from '../../../../services/products-service';
@@ -22,8 +22,7 @@ export class DashboardView implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private productsService: ProductsService,
-    private cdr: ChangeDetectorRef
+    private productsService: ProductsService
   ) { }
 
   ngOnInit(): void {
@@ -94,7 +93,6 @@ loadProducts(): void {
             this.isDetailOpen = false;
           }
         }
-        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Failed to load products:', error);
